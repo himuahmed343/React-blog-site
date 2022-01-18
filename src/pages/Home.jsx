@@ -1,4 +1,4 @@
-import { collection, getDocs } from "@firebase/firestore";
+import { collection, deleteDoc, doc, getDocs } from "@firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { db } from "../firebase-config";
 
@@ -13,10 +13,38 @@ const Home = () => {
     };
     getPosts();
   });
+
+  const deletePost = async (id) => {
+    const postDoc = doc(db, "posts", id);
+    await deleteDoc(postDoc);
+  };
   return (
     <div className="homePage">
-      {postLists.map((post) => {
-        return <div className="post">{post.title}</div>;
+      {postLists.map((post, id) => {
+        return (
+          <div className="post" key={id}>
+            <div className="postHeader">
+              <div className="title">
+                <h1>{post.title}</h1>
+              </div>
+              <div
+                className="deletePost"
+                onClick={() => {
+                  deletePost(post.id);
+                }}
+              >
+                <button>&#128465;</button>
+              </div>
+            </div>
+            <div className="postTextContainer">
+              <p>{post.postText}</p>
+            </div>
+            <div className="authorDetails">
+              <img src={post.author.image} alt="" className="authorImg" />
+              <span> @ {post.author.name}</span>
+            </div>
+          </div>
+        );
       })}
     </div>
   );

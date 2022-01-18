@@ -31,6 +31,7 @@ const CreatePost = ({ isAuth }) => {
     <div className="createPostPage">
       <div className="cpContainer">
         <h1>Create A Post</h1>
+
         <div className="inputGp">
           <label>Title: </label>
           <input
@@ -39,6 +40,7 @@ const CreatePost = ({ isAuth }) => {
             onChange={(e) => {
               setTitle(e.target.value);
             }}
+            required
           />
         </div>
         <div className="inputGp">
@@ -49,8 +51,10 @@ const CreatePost = ({ isAuth }) => {
             onChange={(e) => {
               setPostText(e.target.value);
             }}
+            required
           />
         </div>
+
         <button type="submit" onClick={createPost}>
           Submit Post
         </button>
